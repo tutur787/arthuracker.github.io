@@ -141,9 +141,14 @@ a:focus-visible {
 }
 
 .nav-links a:hover::after,
-.nav-resume:hover::after {
+.nav-resume:hover::after,
+.nav-links a.is-current::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.nav-links a.is-current {
+  color: var(--accent);
 }
 
 .nav-resume {
@@ -245,6 +250,92 @@ h2 {
   color: var(--accent);
 }
 
+/* Motion is progressive enhancement: content stays visible until JS opts in. */
+.motion-ready .hero .kicker,
+.motion-ready .hero h1,
+.motion-ready .hero .hero-intro,
+.motion-ready .hero .hero-actions,
+.motion-ready .hero .proof-list,
+.motion-ready .hero .portrait-wrap {
+  opacity: 0;
+  transform: translateY(0.85rem);
+  transition:
+    opacity 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.motion-ready .hero .portrait-wrap {
+  transform: translateY(1rem) rotate(1.2deg);
+}
+
+.motion-ready.page-loaded .hero .kicker,
+.motion-ready.page-loaded .hero h1,
+.motion-ready.page-loaded .hero .hero-intro,
+.motion-ready.page-loaded .hero .hero-actions,
+.motion-ready.page-loaded .hero .proof-list {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+.motion-ready.page-loaded .hero .portrait-wrap {
+  opacity: 1;
+  transform: rotate(1.2deg);
+  will-change: auto;
+}
+
+.motion-ready.page-loaded .hero h1 {
+  transition-delay: 70ms;
+}
+
+.motion-ready.page-loaded .hero .hero-intro,
+.motion-ready.page-loaded .hero .portrait-wrap {
+  transition-delay: 130ms;
+}
+
+.motion-ready.page-loaded .hero .hero-actions {
+  transition-delay: 190ms;
+}
+
+.motion-ready.page-loaded .hero .proof-list {
+  transition-delay: 250ms;
+}
+
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(0.9rem);
+  transition:
+    opacity 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.motion-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+.motion-ready .project-row:nth-child(2).is-visible,
+.motion-ready .experience-row:nth-child(2).is-visible {
+  transition-delay: 55ms;
+}
+
+.motion-ready .project-row:nth-child(3).is-visible,
+.motion-ready .experience-row:nth-child(3).is-visible {
+  transition-delay: 110ms;
+}
+
+.motion-ready .project-row:nth-child(4).is-visible,
+.motion-ready .experience-row:nth-child(4).is-visible {
+  transition-delay: 165ms;
+}
+
+.motion-ready .project-row:nth-child(5).is-visible {
+  transition-delay: 220ms;
+}
+
 .proof-list {
   margin: clamp(3rem, 6vw, 5rem) 0 0;
   padding: 0;
@@ -341,6 +432,7 @@ h2 {
   margin: 0;
   color: var(--accent);
   font: 700 0.75rem/1.4 var(--mono);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-title h3,
@@ -356,6 +448,9 @@ h2 {
   margin-top: 0.45rem;
   font-size: clamp(1.65rem, 2.8vw, 2.25rem);
   line-height: 1.05;
+  transition:
+    color 180ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-body > p {
@@ -384,6 +479,9 @@ h2 {
 .project-link {
   align-self: start;
   white-space: nowrap;
+  transition:
+    color 160ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-row::before {
@@ -398,6 +496,21 @@ h2 {
 
 .project-row:hover::before {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-row:hover .project-index {
+    transform: translateX(0.35rem);
+  }
+
+  .project-row:hover .project-title h3 {
+    color: var(--accent);
+    transform: translateX(0.18rem);
+  }
+
+  .project-row:hover .project-link {
+    transform: translateX(0.25rem);
+  }
 }
 
 .project-archive {
@@ -826,6 +939,21 @@ h2 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .motion-ready .hero .kicker,
+  .motion-ready .hero h1,
+  .motion-ready .hero .hero-intro,
+  .motion-ready .hero .hero-actions,
+  .motion-ready .hero .proof-list,
+  .motion-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .motion-ready .hero .portrait-wrap {
+    opacity: 1 !important;
+    transform: rotate(1.2deg) !important;
   }
 }
 
